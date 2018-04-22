@@ -10,18 +10,38 @@ import Cocoa
 
 class ViewController: NSViewController {
 
+    @IBOutlet weak var textField: NSTextField!
+    @IBOutlet weak var importantCheckbox: NSButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-    }
-
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
+        if let context = (NSApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext {
+            
+            let toDoItem = ToDoItem(context: context)
+            
+            toDoItem.name = textField.stringValue
+            if importantCheckbox.state.rawValue == 0 {
+                //Not Important
+                toDoItem.important = false
+            } else {
+                // Important
+                toDoItem.important = true
+            }
+            
+            (NSApplication.shared.delegate as? AppDelegate)?.saveAction(nil)
         }
     }
 
 
+    @IBAction func addClicked(_ sender: Any) {
+        if textField.stringValue != "" {
+            
+            
+        }
+            
+    }
+    
 }
 
