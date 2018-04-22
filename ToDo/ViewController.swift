@@ -17,31 +17,37 @@ class ViewController: NSViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        if let context = (NSApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext {
-            
-            let toDoItem = ToDoItem(context: context)
-            
-            toDoItem.name = textField.stringValue
-            if importantCheckbox.state.rawValue == 0 {
-                //Not Important
-                toDoItem.important = false
-            } else {
-                // Important
-                toDoItem.important = true
-            }
-            
-            (NSApplication.shared.delegate as? AppDelegate)?.saveAction(nil)
+        
+        
         }
-    }
-
-
     @IBAction func addClicked(_ sender: Any) {
         if textField.stringValue != "" {
             
+            if let context = (NSApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext {
+                
+                let toDoItem = ToDoItem(context: context)
+                
+                toDoItem.name = textField.stringValue
+                if importantCheckbox.state.rawValue == 0 {
+                    //Not Important
+                    toDoItem.important = false
+                } else {
+                    // Important
+                    toDoItem.important = true
+                }
+                
+                (NSApplication.shared.delegate as? AppDelegate)?.saveAction(nil)
+                
+                textField.stringValue = ""
+                importantCheckbox.state = NSControl.StateValue(rawValue: 0)
+                
+            }
             
         }
-            
+        
     }
-    
-}
+    }
+
+
+
 
